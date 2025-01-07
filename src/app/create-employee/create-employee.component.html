@@ -1,0 +1,20 @@
+<form (ngSubmit)="addBook()">
+    <table>
+        <tr>
+            <Td>Book Id</Td>
+            <td><input type="text" name="bookid" [(ngModel)]="bookobj.empId"/></td>
+        </tr>
+        <tr>
+            <Td>Book Title</Td>
+            <td><input type="text" name="booktitle" [(ngModel)]="bookobj.empName"/></td>
+        </tr>
+        <tr>
+            <Td>Book Price</Td>
+            <td><input type="text" name="bookprice" [(ngModel)]="bookobj.salary"/></td>
+        </tr>
+       <tr>
+        <td></td>
+        <td><input type="submit" value="Click here"/></td>
+       </tr>
+        </table>
+</form>

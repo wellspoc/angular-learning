@@ -1,0 +1,21 @@
+<div class="rule-list-container">
+    <table>
+      <thead>
+        <tr>
+          <th>Index</th>
+          <th>Name</th>
+          <th>Status</th>
+          <th>Date</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let rule of ruleList; let i = index" (click)="fetchRuleDetails(rule.ruleId)">
+          <td>{{ i + 1 }}</td>
+          <td>{{ rule.ruleName }}</td>
+          <td>{{ rule.status }}</td>
+          <td>{{ rule.updatedDate | date:'MM/dd/yyyy'}}</td>
+        </tr> 
+      </tbody>
+    </table>
+  </div>
+  

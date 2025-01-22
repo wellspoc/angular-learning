@@ -4,6 +4,7 @@ import { EmployeeComponent } from './employee/employee.component';
 import { LoginFormsComponent } from './login-forms/login-forms.component';
 import { KieServerComponent } from './kie-server/kie-server.component';
 import { RuleBuilderComponent } from './rule-builder/rule-builder.component';
+import { DashboardComponent } from './dashboard/dashboard.component';
 
 export const routes: Routes = [
     {
@@ -17,7 +18,12 @@ export const routes: Routes = [
     },
     {
         path: 'kieServer',component:KieServerComponent
-    },
+    }
+    ,
+    {
+        path: 'dashboard',component:DashboardComponent
+    }
+    ,
     {
         path: 'ruleBuilder',component:RuleBuilderComponent
     }

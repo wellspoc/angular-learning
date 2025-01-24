@@ -1,93 +1,122 @@
 <div class="container mt-5">
-    <form >
-        <div class="mb-3">
-            <label for="disabledTextArea" class="form-label">Test Statement</label>
-            <textarea
-                id="disabledTextArea"
-                class="form-control"
-                [(ngModel)]="disabledTextAreaContent"
-                [ngModelOptions]="{ standalone: true }"
-                disabled
-                rows="4"
-            ></textarea>
-        </div>
-        <div class="mt-3">
-            <label for="nameText" class="form-label">Rule Name</label>
-            <input type="text" id="nameText" class="form-control"  [(ngModel)]= "ruleName" [ngModelOptions]="{standalone: true}" />
-        </div>
+  <form>
+    <!-- Rule Name -->
+    <div class="mt-3">
+      <label for="nameText" class="form-label">Rule Name</label>
+      <input
+        type="text"
+        id="nameText"
+        class="form-control"
+        [(ngModel)]="ruleName"
+        [ngModelOptions]="{ standalone: true }"
+      />
+    </div>
 
-        <div class="row">
-            <div class="mb-3" class="col-5">
-                <label for="tableSelect" class="form-label">Available Tables</label>
-                <select id="tableSelect" class="form-select" [(ngModel)]= "selectedAvailableTables" multiple name="table" >
-                    <option *ngFor="let table of tableList ; let i = index" [value]="table" [selected]="i === 0">{{ table }}</option>
-                </select>
-            </div>
-           
+    <!-- Test Statement -->
+    <div class="mb-3">
+      <label for="disabledTextArea" class="form-label">Test Statement</label>
+      <textarea
+        id="disabledTextArea"
+        class="form-control"
+        [(ngModel)]="disabledTextAreaContent"
+        [ngModelOptions]="{ standalone: true }"
+        disabled
+        rows="4"
+      ></textarea>
+    </div>
 
-            <div class="col-2 d-flex flex-column align-items-center justify-content-center" style="height: 150px;">
-                <button
-                  class="btn btn-primary btn-sm mb-2"
-                  (click)="moveToSelected()"
-                  style="width: 50px;"
-                >
-                  ▶
-                </button>
-                <button
-                  class="btn btn-secondary btn-sm"
-                  (click)="moveToAvailable()"
-                  style="width: 50px;"
-                >
-                  ◀
-                </button>
-              </div>
-            <div class="mb-3" class="col-5">
-                <label for="tableSelect" class="form-label">Selected Table</label>
-                <select id="tableSelect" class="form-select" [(ngModel)]= "selectedSelectedTables" multiple (change)="onTableChange()" name="table" >
-                    <option *ngFor="let table of selectedTables ; let i = index" [value]="table" [selected]="i === 0">{{ table }}</option>
-                </select>
-            </div>
+    <!-- Tables Selection -->
+    <div class="row">
+      <div class="col-5">
+        <label for="availableTables" class="form-label">Available Tables</label>
+        <select
+          id="availableTables"
+          class="form-select"
+          [(ngModel)]="selectedAvailable"
+          [ngModelOptions]="{ standalone: true }"
+          multiple
+        >
+          <option *ngFor="let table of tableList" [value]="table">{{ table }}</option>
+        </select>
+      </div>
 
-        </div>
-        <div class="row">
-            <div class="mb-3" class="col-5">
-                <label for="columnSelect" class="form-label">Available Column</label>
-                <select id="columnSelect" class="form-select" [(ngModel)]="selectedAvailableColumns" name="column" multiple >
-                    <option *ngFor="let column of columnList; let i = index" [value]="column" [selected]="i === 0">{{ column }}</option>
-                </select>
-            </div>
-            <div class="col-2 d-flex flex-column align-items-center justify-content-center" style="height: 150px;">
-                <button
-                  class="btn btn-primary btn-sm mb-2"
-                  (click)="moveToSelectedColumn()"
-                  style="width: 50px;"
-                >
-                  ▶
-                </button>
-                <button
-                  class="btn btn-secondary btn-sm"
-                  (click)="moveToAvailableColumn()"
-                  style="width: 50px;"
-                >
-                  ◀
-                </button>
-              </div>
-            <div class="mb-3" class="col-5">
-                <label for="columnSelect" class="form-label">Selected Column</label>
-                <select id="columnSelect" class="form-select" [(ngModel)]="selectedSelectedColumns" name="column" multiple (change)="onColumnsChange()">
-                    <option *ngFor="let column of selectedColumns; let i = index" [value]="column" [selected]="i === 0">{{ column }}</option>
-                </select>
-            </div>
-            </div>
-        
-        <div class="mt-3">
-            <label for="exampleText" class="form-label">SQL Query</label>
-            <input type="text" id="exampleText" class="form-control"  [(ngModel)]= "query" [ngModelOptions]="{standalone: true}" disabled />
-        </div>
-        <div class="mt-4">
-            <button type="button" class="btn btn-secondary me-2" (click)="saveRule()">Save</button>
-            <button type="button" class="btn btn-primary me-2" >Submit</button>
-            <button type="button" class="btn btn-success" >Execute</button>
-        </div>
-    </form>
+      <div
+        class="col-2 d-flex flex-column align-items-center justify-content-center"
+        style="height: 150px;"
+      >
+        <button class="btn btn-primary btn-sm mb-2" (click)="moveToSelected()">▶</button>
+        <button class="btn btn-secondary btn-sm" (click)="moveToAvailable()">◀</button>
+      </div>
+
+      <div class="col-5">
+        <label for="selectedTables" class="form-label">Selected Tables</label>
+        <select
+          id="selectedTables"
+          class="form-select"
+          [(ngModel)]="selectedAvailable"
+          [ngModelOptions]="{ standalone: true }"
+          multiple
+        >
+          <option *ngFor="let table of selectedTables" [value]="table">{{ table }}</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- Columns Selection -->
+    <div class="row mt-3">
+      <div class="col-5">
+        <label for="availableColumns" class="form-label">Available Columns</label>
+        <select
+          id="availableColumns"
+          class="form-select"
+          [(ngModel)]="selectedAvailable"
+          [ngModelOptions]="{ standalone: true }"
+          multiple
+        >
+          <option *ngFor="let column of columnList" [value]="column">{{ column }}</option>
+        </select>
+      </div>
+
+      <div
+        class="col-2 d-flex flex-column align-items-center justify-content-center"
+        style="height: 150px;"
+      >
+        <button class="btn btn-primary btn-sm mb-2" (click)="moveToSelectedColumn()">▶</button>
+        <button class="btn btn-secondary btn-sm" (click)="moveToAvailableColumn()">◀</button>
+      </div>
+
+      <div class="col-5">
+        <label for="selectedColumns" class="form-label">Selected Columns</label>
+        <select
+          id="selectedColumns"
+          class="form-select"
+          [(ngModel)]="selectedAvailable"
+          [ngModelOptions]="{ standalone: true }"
+          multiple
+        >
+          <option *ngFor="let column of selectedColumns" [value]="column">{{ column }}</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- SQL Query -->
+    <div class="mt-3">
+      <label for="query" class="form-label">SQL Query</label>
+      <input
+        type="text"
+        id="query"
+        class="form-control"
+        [(ngModel)]="query"
+        [ngModelOptions]="{ standalone: true }"
+        disabled
+      />
+    </div>
+
+    <!-- Action Buttons -->
+    <div class="mt-4">
+      <button type="button" class="btn btn-secondary me-2" (click)="saveRule()">Save</button>
+      <button type="button" class="btn btn-primary me-2">Submit</button>
+      <button type="button" class="btn btn-success">Execute</button>
+    </div>
+  </form>
 </div>

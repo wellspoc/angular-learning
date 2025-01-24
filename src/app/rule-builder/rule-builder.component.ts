@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { EmployeeServiceService } from '../employee-service.service';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { NgFor } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Rules } from '../rules';
@@ -8,153 +8,109 @@ import { Rules } from '../rules';
 @Component({
   selector: 'app-rule-builder',
   standalone: true,
-  imports: [NgFor,FormsModule],
+  imports: [NgFor, FormsModule],
   templateUrl: './rule-builder.component.html',
   styleUrl: './rule-builder.component.css'
 })
 export class RuleBuilderComponent {
-  disabledTextAreaContent: string = `Find the list of new users who has applied for homeloan last month\n \n Questions \n• Credit Score should be above 750 \n• Monthly income should be more than 20000 USD`;
+  disabledTextAreaContent = `Find the list of new users who has applied for homeloan last month
 
-  availableTables : string[]=[];
-  selectedTables: string[]=[];
-  
-  selectedAvailableTables: string[] = []; // To store selected tables in Available list
-  selectedSelectedTables: string[] = []; // To store selected tables in Selected list
+Questions
+• Credit Score should be above 750
+• Monthly income should be more than 20000 USD`;
 
-
-  availableColumns : string[]=[];
-  selectedColumns: string[]=[];
-  
-  selectedAvailableColumns: string[] = []; // To store selected tables in Available list
-  selectedSelectedColumns: string[] = []; // To store selected tables in Selected list
-
-  tableList!:String[];
-  selectedTable!:String;
-  selectedColumn!:String[];
-  columnList!:String[];
-  query!:String;
+  tableList: string[] = [];
+  columnList: string[] = [];
+  selectedTables: string[] = [];
+  selectedColumns: string[] = [];
+  selectedAvailable: string[] = [];
+  query = '';
   ruleName!:String;
   rule = new Rules();
-  id!:number;
-  constructor(private empervice:EmployeeServiceService,private router:Router,private aroute:ActivatedRoute)
-  {
+  id!: number;
 
-  }
-  ngOnInit()
-  {
-    this.id=this.aroute.snapshot.params['id'];
+  constructor(
+    private employeeService: EmployeeServiceService,
+    private route: ActivatedRoute
+  ) {}
+
+  ngOnInit(): void {
+    this.id = this.route.snapshot.params['id'];
     this.reloadData();
-    if(this.id==0 || this.id == undefined){
-     
-    }
-    else{
-      this.empervice.fetchRuleDetails(this.id).subscribe(emparr=>
-        {
-          this.rule=emparr;
-          this.ruleName= this.rule.ruleName;
-          this.selectedAvailableTables= this.rule.tableName.split(',');
-          this.selectedAvailableColumns= this.rule.columnName.split(',');
-          this.moveToSelected();
-         
-        }
-        )
-       
-    }
-  }
-  reloadData()
-  {
-    this.empervice.getTables().subscribe(emparr=>
-    {
-      this.tableList=emparr;
-    }
-    )
-  
-  }
 
-  onTableChange() {
-    this.empervice.getColumns(this.selectedTables.join(',')).subscribe(emparr=>
-      {
-        this.columnList=emparr;
-      }
-      )
-      this.query = "select * from "+this.selectedTables;
-  }
-  onColumnsChange(){
-    
-    if(this.selectedColumns.length>0){
-      this.query = "select "+this.selectedColumns+" from "+this.selectedTables;
-    }
-    else{
-      this.query = "select * from "+this.selectedTables;
+    if (this.id) {
+      this.employeeService.fetchRuleDetails(this.id).subscribe(rule => {
+        Object.assign(this.rule, rule);
+        this.ruleName = rule.ruleName;
+        this.selectedTables = rule.tableName.split(',');
+        this.selectedColumns = rule.columnName.split(',');
+        this.syncAvailableData();
+        this.updateQuery();
+      });
     }
   }
 
-  saveRule(){
-   
-    this.rule.ruleName = this.ruleName;
-    this.rule.isActive = true;
-    this.rule.status = 0;
-    this.rule.tableName=this.selectedTables.join(',');
-    this.rule.sqlQuery=this.query;
-    this.rule.columnName=this.selectedColumns.join(',');
-
-    this.empervice.save(this.rule).subscribe(ruleObject=>
-      {
-        this.id=ruleObject;
-        alert("The rule is saved with id : "+this.id);
-      }
-      )
+  reloadData(): void {
+    this.employeeService.getTables().subscribe(tables => (this.tableList = tables));
   }
 
-
-  moveToSelected() {
-    this.selectedAvailableTables.forEach((table) => {
-      const index = this.tableList.indexOf(table);
-      if (index > -1) {
-        this.tableList.splice(index, 1); // Remove from availableTables
-        this.selectedTables.push(table); // Add to selectedTables
-      }
+  syncAvailableData(): void {
+    this.selectedTables.forEach(table => this.removeFromArray(this.tableList, table));
+    this.employeeService.getColumns(this.selectedTables.join(',')).subscribe(columns => {
+      this.columnList = columns;
+      this.selectedColumns.forEach(column => this.removeFromArray(this.columnList, column));
     });
-    this.onTableChange();
-    this.selectedAvailableTables = []; // Clear selection
   }
 
-  moveToAvailable() {
-    this.selectedSelectedTables.forEach((table) => {
-      const index = this.selectedTables.indexOf(table);
-      if (index > -1) {
-        this.selectedTables.splice(index, 1); // Remove from selectedTables
-        this.tableList.push(table); // Add to availableTables
-      }
+  updateQuery(): void {
+    const tables = this.selectedTables.join(',');
+    const columns = this.selectedColumns.length ? this.selectedColumns.join(',') : '*';
+    this.query = `SELECT ${columns} FROM ${tables}`;
+  }
+
+  saveRule(): void {
+    Object.assign(this.rule, {
+      ruleName: this.ruleName,
+      isActive: true,
+      status: 0,
+      tableName: this.selectedTables.join(','),
+      sqlQuery: this.query,
+      columnName: this.selectedColumns.join(',')
     });
-    this.onTableChange();
-    this.selectedSelectedTables = []; // Clear selection
-  }
 
-
-  moveToSelectedColumn() {
-    
-    this.selectedAvailableColumns.forEach((table) => {
-      const index = this.columnList.indexOf(table);
-      if (index > -1) {
-        this.columnList.splice(index, 1); // Remove from availableTables
-        this.selectedColumns.push(table); // Add to selectedTables
-      }
+    this.employeeService.save(this.rule).subscribe(ruleId => {
+      this.id = ruleId;
+      alert(`The rule is saved with ID: ${this.id}`);
     });
-    this.onColumnsChange();
-    this.selectedAvailableColumns = []; // Clear selection
   }
 
-  moveToAvailableColumn() {
-    this.selectedSelectedColumns.forEach((table) => {
-      const index = this.selectedColumns.indexOf(table);
-      if (index > -1) {
-        this.selectedColumns.splice(index, 1); // Remove from selectedTables
-        this.columnList.push(table); // Add to availableTables
-      }
+  moveItems(source: string[], target: string[], items: string[]): void {
+    items.forEach(item => {
+      this.removeFromArray(source, item);
+      target.push(item);
     });
-    this.onColumnsChange();
-    this.selectedSelectedColumns = []; // Clear selection
+    this.updateQuery();
+    items.length = 0;
   }
 
+  removeFromArray(array: string[], item: string): void {
+    const index = array.indexOf(item);
+    if (index > -1) array.splice(index, 1);
+  }
+
+  moveToSelected(): void {
+    this.moveItems(this.tableList, this.selectedTables, this.selectedAvailable);
+  }
+
+  moveToAvailable(): void {
+    this.moveItems(this.selectedTables, this.tableList, this.selectedAvailable);
+  }
+
+  moveToSelectedColumn(): void {
+    this.moveItems(this.columnList, this.selectedColumns, this.selectedAvailable);
+  }
+
+  moveToAvailableColumn(): void {
+    this.moveItems(this.selectedColumns, this.columnList, this.selectedAvailable);
+  }
 }

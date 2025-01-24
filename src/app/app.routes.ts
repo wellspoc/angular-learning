@@ -7,28 +7,11 @@ import { RuleBuilderComponent } from './rule-builder/rule-builder.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 
 export const routes: Routes = [
-    {
-        path: 'home',component:HomeComponentComponent
-    },
-    {
-        path: 'forms',component:EmployeeComponent
-    },
-    {
-        path: 'loginForm',component:LoginFormsComponent
-    },
-    {
-        path: 'kieServer',component:KieServerComponent
-    }
-    ,
-    {
-        path: 'dashboard',component:DashboardComponent
-    }
-    ,
-    {
-        path: 'ruleBuilder',component:RuleBuilderComponent
-    }
-    ,
-    {
-        path: 'ruleBuilder/:id',component:RuleBuilderComponent
-    }
+  { path: 'home', component: HomeComponentComponent },
+  { path: 'forms', component: EmployeeComponent },
+  { path: 'loginForm', component: LoginFormsComponent },
+  { path: 'kieServer', component: KieServerComponent },
+  { path: 'dashboard', component: DashboardComponent },
+  { path: 'ruleBuilder', component: RuleBuilderComponent },
+  { path: 'ruleBuilder/:id', component: RuleBuilderComponent }
 ];

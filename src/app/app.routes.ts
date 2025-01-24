@@ -27,4 +27,8 @@ export const routes: Routes = [
     {
         path: 'ruleBuilder',component:RuleBuilderComponent
     }
+    ,
+    {
+        path: 'ruleBuilder/:id',component:RuleBuilderComponent
+    }
 ];

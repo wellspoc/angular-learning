@@ -29,7 +29,7 @@ export class DashboardComponent {
 
   }
   fetchRuleDetails(ruleId: number) {
-    this.router.navigate([`/ruleBuilder`]);  
+    this.router.navigate([`/ruleBuilder`,ruleId]);  
   }
 
 }

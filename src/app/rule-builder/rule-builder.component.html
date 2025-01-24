@@ -1,23 +1,85 @@
 <div class="container mt-5">
-    <h2 class="mb-4">Query Builder</h2>
     <form >
+        <div class="mb-3">
+            <label for="disabledTextArea" class="form-label">Test Statement</label>
+            <textarea
+                id="disabledTextArea"
+                class="form-control"
+                [(ngModel)]="disabledTextAreaContent"
+                [ngModelOptions]="{ standalone: true }"
+                disabled
+                rows="4"
+            ></textarea>
+        </div>
         <div class="mt-3">
             <label for="nameText" class="form-label">Rule Name</label>
             <input type="text" id="nameText" class="form-control"  [(ngModel)]= "ruleName" [ngModelOptions]="{standalone: true}" />
         </div>
-        <div class="mb-3">
-            <label for="tableSelect" class="form-label">Select Table</label>
-            <select id="tableSelect" class="form-select" [(ngModel)]= "selectedTable" (change)="onTableChange()" name="table" >
-                <option *ngFor="let table of tableList ; let i = index" [value]="table" [selected]="i === 0">{{ table }}</option>
-            </select>
-        </div>
 
-        <div class="mb-3">
-            <label for="columnSelect" class="form-label">Select Column</label>
-            <select id="columnSelect" class="form-select" [(ngModel)]="selectedColumn" name="column" multiple (change)="onColumnsChange()">
-                <option *ngFor="let column of columnList; let i = index" [value]="column" [selected]="i === 0">{{ column }}</option>
-            </select>
+        <div class="row">
+            <div class="mb-3" class="col-5">
+                <label for="tableSelect" class="form-label">Available Tables</label>
+                <select id="tableSelect" class="form-select" [(ngModel)]= "selectedAvailableTables" multiple name="table" >
+                    <option *ngFor="let table of tableList ; let i = index" [value]="table" [selected]="i === 0">{{ table }}</option>
+                </select>
+            </div>
+           
+
+            <div class="col-2 d-flex flex-column align-items-center justify-content-center" style="height: 150px;">
+                <button
+                  class="btn btn-primary btn-sm mb-2"
+                  (click)="moveToSelected()"
+                  style="width: 50px;"
+                >
+                  ▶
+                </button>
+                <button
+                  class="btn btn-secondary btn-sm"
+                  (click)="moveToAvailable()"
+                  style="width: 50px;"
+                >
+                  ◀
+                </button>
+              </div>
+            <div class="mb-3" class="col-5">
+                <label for="tableSelect" class="form-label">Selected Table</label>
+                <select id="tableSelect" class="form-select" [(ngModel)]= "selectedSelectedTables" multiple (change)="onTableChange()" name="table" >
+                    <option *ngFor="let table of selectedTables ; let i = index" [value]="table" [selected]="i === 0">{{ table }}</option>
+                </select>
+            </div>
+
         </div>
+        <div class="row">
+            <div class="mb-3" class="col-5">
+                <label for="columnSelect" class="form-label">Available Column</label>
+                <select id="columnSelect" class="form-select" [(ngModel)]="selectedAvailableColumns" name="column" multiple >
+                    <option *ngFor="let column of columnList; let i = index" [value]="column" [selected]="i === 0">{{ column }}</option>
+                </select>
+            </div>
+            <div class="col-2 d-flex flex-column align-items-center justify-content-center" style="height: 150px;">
+                <button
+                  class="btn btn-primary btn-sm mb-2"
+                  (click)="moveToSelectedColumn()"
+                  style="width: 50px;"
+                >
+                  ▶
+                </button>
+                <button
+                  class="btn btn-secondary btn-sm"
+                  (click)="moveToAvailableColumn()"
+                  style="width: 50px;"
+                >
+                  ◀
+                </button>
+              </div>
+            <div class="mb-3" class="col-5">
+                <label for="columnSelect" class="form-label">Selected Column</label>
+                <select id="columnSelect" class="form-select" [(ngModel)]="selectedSelectedColumns" name="column" multiple (change)="onColumnsChange()">
+                    <option *ngFor="let column of selectedColumns; let i = index" [value]="column" [selected]="i === 0">{{ column }}</option>
+                </select>
+            </div>
+            </div>
+        
         <div class="mt-3">
             <label for="exampleText" class="form-label">SQL Query</label>
             <input type="text" id="exampleText" class="form-control"  [(ngModel)]= "query" [ngModelOptions]="{standalone: true}" disabled />

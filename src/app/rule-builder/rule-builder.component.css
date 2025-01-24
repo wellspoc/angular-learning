@@ -1,0 +1,23 @@
+.container {
+    font-family: Arial, sans-serif;
+    max-width: 800px;
+  }
+  
+  textarea {
+    width: 100%;
+    font-family: monospace;
+    resize: none;
+  }
+  
+  button {
+    width: 100px;
+  }
+  
+  .col-2 {
+    height: 300px; /* Adjust this based on your design */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  

@@ -5,6 +5,8 @@ import { Observable } from 'rxjs';
 import { Rules } from './rules';
 import { Rule } from './rule';
 import { catchError, retry } from 'rxjs/operators';
+import { Task } from './task';
+import { TaskDetail } from './task-detail';
 
 @Injectable({
   providedIn: 'root'
@@ -68,4 +70,13 @@ export class EmployeeService {
     return this.get<Rule[]>("rules");
   }
 
+  fetchTasks():Observable<Task[]> {
+    return this.get<Task[]>("tasks");
+  }
+  fetchTaskDetails(taskId: number): Observable<TaskDetail> {
+    return this.get<TaskDetail>("tasks/"+taskId);
+  }
+  updateTask(taskDetail: TaskDetail): Observable<number> {
+    return this.post<number>("tasks", taskDetail);
+  }
 }

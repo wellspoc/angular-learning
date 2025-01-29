@@ -1,0 +1,22 @@
+<div class="task-list-container">
+    <table class="table">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Name</th>
+          <th>owner</th>
+          <th>Status</th>
+          <th>Date</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let task of taskList; let i = index"  [ngClass]="{'disabled-row': task.status === 'Completed'}" (click)="fetchTaskDetails(task.taskId)">
+          <td>{{ i + 1 }}</td>
+          <td>{{ task.ruleName }}</td>
+          <td>{{ task.owner }}</td>
+          <td>{{ task.status }}</td>
+          <td>{{ task.createdDate | date: 'MM/dd/yyyy' }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>

@@ -4,6 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { CommonModule, NgFor } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Rules } from '../rules';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-rule-builder',
@@ -31,7 +32,8 @@ Questions
   showExecuteButton: boolean = false; 
   constructor(
     private employeeService: EmployeeService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private router:Router
   ) {}
 
   ngOnInit(): void {
@@ -86,10 +88,8 @@ Questions
       columnName: this.selectedColumns.join(',')
     });
 
-    this.employeeService.save(this.rule).subscribe(ruleId => {
-      this.id = ruleId;
-      alert(`The rule is saved with ID: ${this.id}`);
-    });
+    this.employeeService.save(this.rule).subscribe(ruleId =>this.id);
+    this.router.navigate([`/dashboard`]);
   }
 
   moveItems(source: string[], target: string[], items: string[]): void {

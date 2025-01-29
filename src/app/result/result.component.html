@@ -1,0 +1,42 @@
+<div class="container mt-5">
+    <form>
+      <!-- Rule Name -->
+      <div class="mt-3">
+        <label for="nameText" class="form-label">Rule Name</label>
+        <input
+          type="text"
+          id="nameText"
+          class="form-control"
+          disabled
+          [(ngModel)]="ruleName"
+          [ngModelOptions]="{ standalone: true }"
+        />
+      </div>
+  
+      <!-- Test Statement -->
+      <div class="mb-3">
+        <label for="disabledTextArea" class="form-label">Test Statement</label>
+        <textarea
+          id="disabledTextArea"
+          class="form-control"
+          [(ngModel)]="disabledTextAreaContent"
+          [ngModelOptions]="{ standalone: true }"
+          disabled
+          rows="4"
+        ></textarea>
+      </div>
+      <!-- SQL Query -->
+      <div class="mt-3">
+        <label for="query" class="form-label">SQL Query</label>
+        <input
+          type="text"
+          id="query"
+          class="form-control"
+          [(ngModel)]="query"
+          [ngModelOptions]="{ standalone: true }"
+          disabled
+        />
+      </div>
+    </form>
+  </div>
+  

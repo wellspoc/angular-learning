@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { EmployeeServiceService } from '../employee-service.service';
+import { EmployeeService } from '../employee-service.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 
@@ -15,7 +15,7 @@ export class KieServerComponent {
   messageData!:JSON;
   serverInfo!:String;
 
-  constructor(private empervice:EmployeeServiceService,private router:Router,private aroute:ActivatedRoute)
+  constructor(private empervice:EmployeeService,private router:Router,private aroute:ActivatedRoute)
   {
 
   }

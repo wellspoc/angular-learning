@@ -114,9 +114,9 @@
 
     <!-- Action Buttons -->
     <div class="mt-4">
-      <button type="button" class="btn btn-secondary me-2" (click)="saveRule()">Save</button>
-      <button type="button" class="btn btn-primary me-2">Submit</button>
-      <button type="button" class="btn btn-success">Execute</button>
+      <button type="button" class="btn btn-secondary me-2" (click)="saveRule(0)">Save</button>
+      <button type="button" class="btn btn-primary me-2" (click)="saveRule(1)">Submit</button>
+      <button type="button" class="btn btn-success" *ngIf="showExecuteButton" >Execute</button>
     </div>
   </form>
 </div>

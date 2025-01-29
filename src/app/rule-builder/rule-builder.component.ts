@@ -1,14 +1,14 @@
 import { Component } from '@angular/core';
-import { EmployeeServiceService } from '../employee-service.service';
+import { EmployeeService } from '../employee-service.service';
 import { ActivatedRoute } from '@angular/router';
-import { NgFor } from '@angular/common';
+import { CommonModule, NgFor } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Rules } from '../rules';
 
 @Component({
   selector: 'app-rule-builder',
   standalone: true,
-  imports: [NgFor, FormsModule],
+  imports: [NgFor, FormsModule,CommonModule],
   templateUrl: './rule-builder.component.html',
   styleUrl: './rule-builder.component.css'
 })
@@ -28,9 +28,9 @@ Questions
   ruleName!:String;
   rule = new Rules();
   id!: number;
-
+  showExecuteButton: boolean = false; 
   constructor(
-    private employeeService: EmployeeServiceService,
+    private employeeService: EmployeeService,
     private route: ActivatedRoute
   ) {}
 
@@ -41,11 +41,19 @@ Questions
     if (this.id) {
       this.employeeService.fetchRuleDetails(this.id).subscribe(rule => {
         Object.assign(this.rule, rule);
+        if(rule.status==3){
+          this.showExecuteButton=true;
+        }
         this.ruleName = rule.ruleName;
-        this.selectedTables = rule.tableName.split(',');
-        this.selectedColumns = rule.columnName.split(',');
+        if(rule.tableName!= null || rule.tableName !=undefined ){
+          this.selectedTables = rule.tableName.split(',');
+          if(rule.columnName!= null || rule.columnName!= undefined){
+            this.selectedColumns = rule.columnName.split(',');
+          }
+        }
         this.syncAvailableData();
         this.updateQuery();
+      
       });
     }
   }
@@ -68,11 +76,11 @@ Questions
     this.query = `SELECT ${columns} FROM ${tables}`;
   }
 
-  saveRule(): void {
+  saveRule(status: number): void {
     Object.assign(this.rule, {
       ruleName: this.ruleName,
       isActive: true,
-      status: 0,
+      status: status,
       tableName: this.selectedTables.join(','),
       sqlQuery: this.query,
       columnName: this.selectedColumns.join(',')
@@ -87,7 +95,9 @@ Questions
   moveItems(source: string[], target: string[], items: string[]): void {
     items.forEach(item => {
       this.removeFromArray(source, item);
+      if (!target.includes(item)) {
       target.push(item);
+      }
     });
     this.updateQuery();
     items.length = 0;
@@ -97,13 +107,24 @@ Questions
     const index = array.indexOf(item);
     if (index > -1) array.splice(index, 1);
   }
+  filterStrings(inputArray: string[], prefixes: string[]): string[] {
+    if (!inputArray || !prefixes || prefixes.length === 0) {
+      throw new Error('Both inputArray and prefixes must be provided, and prefixes must not be empty');
+    }
+
+    return inputArray.filter(str => !prefixes.some(prefix => str.startsWith(prefix)));
+  }
 
   moveToSelected(): void {
     this.moveItems(this.tableList, this.selectedTables, this.selectedAvailable);
+    this.syncAvailableData();
   }
 
   moveToAvailable(): void {
+    this.selectedColumns=this.filterStrings(this.selectedColumns,this.selectedAvailable);
     this.moveItems(this.selectedTables, this.tableList, this.selectedAvailable);
+    this.syncAvailableData();
+    
   }
 
   moveToSelectedColumn(): void {

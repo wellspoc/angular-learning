@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Employee } from '../employee';
-import { EmployeeServiceService } from '../employee-service.service';
+import { EmployeeService } from '../employee-service.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgFor } from '@angular/common';
 
@@ -15,7 +15,7 @@ export class EmployeeListComponent {
 
   employee!:Employee[];
 
-  constructor(private empervice:EmployeeServiceService,private router:Router,private aroute:ActivatedRoute)
+  constructor(private empervice:EmployeeService,private router:Router,private aroute:ActivatedRoute)
   {
 
   }

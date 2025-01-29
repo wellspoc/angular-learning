@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Employee } from '../employee';
-import { EmployeeServiceService } from '../employee-service.service';
+import { EmployeeService } from '../employee-service.service';
 import { Router } from '@angular/router'
 import { FormsModule } from '@angular/forms';
 
@@ -13,7 +13,7 @@ import { FormsModule } from '@angular/forms';
 })
 export class CreateEmployeeComponent {
   bookobj=new Employee();
-  constructor( private empService:EmployeeServiceService,private router:Router)
+  constructor( private empService:EmployeeService,private router:Router)
   {
   }
   addBook()

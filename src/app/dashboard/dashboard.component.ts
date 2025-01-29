@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { EmployeeServiceService } from '../employee-service.service';
+import { EmployeeService } from '../employee-service.service';
 import { Router } from '@angular/router';
 import { CommonModule, NgFor } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -15,7 +15,7 @@ import { Rule } from '../rule';
 export class DashboardComponent {
   ruleList: Rule[] = [];
 
-  constructor(private employeeService: EmployeeServiceService, private router: Router) {}
+  constructor(private employeeService: EmployeeService, private router: Router) {}
 
   ngOnInit(): void {
     this.employeeService.fetchRules().subscribe(rules => (this.ruleList = rules));

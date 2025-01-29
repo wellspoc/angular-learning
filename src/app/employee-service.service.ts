@@ -10,7 +10,7 @@ import { catchError, retry } from 'rxjs/operators';
   providedIn: 'root'
 })
 export class EmployeeService {
-  private readonly baseUrl = "http://localhost:8180";
+  private readonly baseUrl = "http://localhost:8180/api";
 
   constructor(private http: HttpClient) {}
 
@@ -49,24 +49,23 @@ export class EmployeeService {
   }
 
   getTables(): Observable<string[]> {
-    return this.get<string[]>("getTables");
+    return this.get<string[]>("tables");
   }
 
   getColumns(tableName: string): Observable<string[]> {
     const params = new HttpParams().set('tableName', tableName);
-    return this.get<string[]>("getColumns", params);
+    return this.get<string[]>("columns", params);
   }
 
   save(rule: Rules): Observable<number> {
-    return this.post<number>("save", rule);
+    return this.post<number>("rules", rule);
   }
-
   fetchRuleDetails(ruleId: number): Observable<Rules> {
-    const params = new HttpParams().set('ruleId', ruleId.toString());
-    return this.get<Rules>("fetchRule", params);
+    return this.get<Rules>("rules/"+ruleId);
   }
 
   fetchRules(): Observable<Rule[]> {
-    return this.get<Rule[]>("getRules");
+    return this.get<Rule[]>("rules");
   }
+
 }

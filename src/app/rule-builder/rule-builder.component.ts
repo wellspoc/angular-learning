@@ -91,6 +91,16 @@ Questions
     this.employeeService.save(this.rule).subscribe(ruleId =>this.id);
     this.router.navigate([`/dashboard`]);
   }
+  executeRule(){
+    this.router.navigate(['/result'], {
+      queryParams: {
+        ruleName: this.ruleName,
+        query: this.query,
+        id:this.id,
+        columnName:this.selectedColumns
+      }
+    });
+  }
 
   moveItems(source: string[], target: string[], items: string[]): void {
     items.forEach(item => {

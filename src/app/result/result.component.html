@@ -38,5 +38,22 @@
         />
       </div>
     </form>
+    <h3 class="mt-4">Output</h3> 
+    <div class="rule-list-container">
+      <table class="table">
+        <thead>
+          <tr>
+            <th *ngFor="let head of header">{{ head }}</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let rule of dataList; let i = index">
+            <td *ngFor="let head of header; let idx = index">
+              {{rule[idx]}}
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
   </div>
   

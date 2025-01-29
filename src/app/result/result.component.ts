@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component ,OnInit} from '@angular/core';
 import { EmployeeService } from '../employee-service.service';
 import { ActivatedRoute } from '@angular/router';
 import { CommonModule, NgFor } from '@angular/common';
@@ -12,7 +12,7 @@ import { Router } from '@angular/router';
   templateUrl: './result.component.html',
   styleUrl: './result.component.css'
 })
-export class ResultComponent {
+export class ResultComponent implements OnInit {
   constructor(
     private employeeService: EmployeeService,
     private route: ActivatedRoute,
@@ -27,6 +27,16 @@ export class ResultComponent {
   query !:String;
   ruleName!:String;
   id!: number;
+  header: string[] = [];
+  dataList!:any;
   ngOnInit(): void {
+    this.route.queryParams.subscribe(params => {
+      this.ruleName = params['ruleName'];
+      this.query = params['query'];
+      this.id = params['id'];
+      this.header = params['columnName'];
+    });
+    this.employeeService.executeQuery(this.query).subscribe(resultset => { this.dataList=resultset
+    });
   }
 }

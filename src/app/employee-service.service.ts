@@ -79,4 +79,8 @@ export class EmployeeService {
   updateTask(taskDetail: TaskDetail): Observable<number> {
     return this.post<number>("tasks", taskDetail);
   }
+  
+  executeQuery(query: String): Observable<any> {
+    return this.post<any>("executeQuery", query);
+  }
 }

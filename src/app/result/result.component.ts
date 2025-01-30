@@ -1,9 +1,9 @@
 import { Component ,OnInit} from '@angular/core';
-import { EmployeeService } from '../employee-service.service';
 import { ActivatedRoute } from '@angular/router';
 import { CommonModule, NgFor } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
+import { TNMServiceService } from '../tnmservice.service';
 
 @Component({
   selector: 'app-result',
@@ -14,7 +14,7 @@ import { Router } from '@angular/router';
 })
 export class ResultComponent implements OnInit {
   constructor(
-    private employeeService: EmployeeService,
+    private tnmService: TNMServiceService,
     private route: ActivatedRoute,
     private router:Router
   ) {}
@@ -36,7 +36,7 @@ export class ResultComponent implements OnInit {
       this.id = params['id'];
       this.header = params['columnName'];
     });
-    this.employeeService.executeQuery(this.query).subscribe(resultset => { this.dataList=resultset
+    this.tnmService.executeQuery(this.query).subscribe(resultset => { this.dataList=resultset
     });
   }
 }

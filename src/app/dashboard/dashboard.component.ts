@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
-import { EmployeeService } from '../employee-service.service';
+
 import { Router } from '@angular/router';
 import { CommonModule, NgFor } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Rule } from '../rule';
+import { TNMServiceService } from '../tnmservice.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -15,10 +16,10 @@ import { Rule } from '../rule';
 export class DashboardComponent {
   ruleList: Rule[] = [];
 
-  constructor(private employeeService: EmployeeService, private router: Router) {}
+  constructor(private tnmService: TNMServiceService, private router: Router) {}
 
   ngOnInit(): void {
-    this.employeeService.fetchRules().subscribe(rules => (this.ruleList = rules));
+    this.tnmService.fetchRules().subscribe(rules => (this.ruleList = rules));
   }
 
   fetchRuleDetails(ruleId: number): void {

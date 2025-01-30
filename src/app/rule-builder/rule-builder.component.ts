@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
-import { EmployeeService } from '../employee-service.service';
 import { ActivatedRoute } from '@angular/router';
 import { CommonModule, NgFor } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Rules } from '../rules';
 import { Router } from '@angular/router';
+import { TNMServiceService } from '../tnmservice.service';
 
 @Component({
   selector: 'app-rule-builder',
@@ -31,7 +31,7 @@ Questions
   id!: number;
   showExecuteButton: boolean = false; 
   constructor(
-    private employeeService: EmployeeService,
+    private tnmService: TNMServiceService,
     private route: ActivatedRoute,
     private router:Router
   ) {}
@@ -41,7 +41,7 @@ Questions
     this.reloadData();
 
     if (this.id) {
-      this.employeeService.fetchRuleDetails(this.id).subscribe(rule => {
+      this.tnmService.fetchRuleDetails(this.id).subscribe(rule => {
         Object.assign(this.rule, rule);
         if(rule.status==3){
           this.showExecuteButton=true;
@@ -61,12 +61,12 @@ Questions
   }
 
   reloadData(): void {
-    this.employeeService.getTables().subscribe(tables => (this.tableList = tables));
+    this.tnmService.getTables().subscribe(tables => (this.tableList = tables));
   }
 
   syncAvailableData(): void {
     this.selectedTables.forEach(table => this.removeFromArray(this.tableList, table));
-    this.employeeService.getColumns(this.selectedTables.join(',')).subscribe(columns => {
+    this.tnmService.getColumns(this.selectedTables.join(',')).subscribe(columns => {
       this.columnList = columns;
       this.selectedColumns.forEach(column => this.removeFromArray(this.columnList, column));
     });
@@ -88,8 +88,10 @@ Questions
       columnName: this.selectedColumns.join(',')
     });
 
-    this.employeeService.save(this.rule).subscribe(ruleId =>this.id);
-    this.router.navigate([`/dashboard`]);
+    this.tnmService.save(this.rule).subscribe(ruleId =>{
+      this.router.navigate([`/dashboard`]);
+    });
+   
   }
   executeRule(){
     this.router.navigate(['/result'], {

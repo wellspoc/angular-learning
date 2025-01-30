@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { Employee } from './employee';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Rules } from './rules';
@@ -11,7 +10,8 @@ import { TaskDetail } from './task-detail';
 @Injectable({
   providedIn: 'root'
 })
-export class EmployeeService {
+export class TNMServiceService {
+
   private readonly baseUrl = "http://localhost:8180/api";
 
   constructor(private http: HttpClient) {}
@@ -36,18 +36,6 @@ export class EmployeeService {
     // Log the error or perform custom error handling
     console.error('An error occurred:', error);
     throw error; // Rethrow the error or return a default observable
-  }
-
-  getEmployee(): Observable<Employee[]> {
-    return this.get<Employee[]>("getEmployee");
-  }
-
-  getInfo(): Observable<JSON> {
-    return this.get<JSON>("getInfo");
-  }
-
-  insertEmployee(emp: Employee): Observable<Employee> {
-    return this.post<Employee>("saveEmployee", emp);
   }
 
   getTables(): Observable<string[]> {

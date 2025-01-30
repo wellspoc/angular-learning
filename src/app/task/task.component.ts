@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
-import { EmployeeService } from '../employee-service.service';
 import { ActivatedRoute } from '@angular/router';
 import { CommonModule, NgFor } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { TaskDetail } from '../task-detail';
 import { Router } from '@angular/router';
+import { TNMServiceService } from '../tnmservice.service';
 
 @Component({
   selector: 'app-task',
@@ -29,14 +29,14 @@ export class TaskComponent {
   • Credit Score should be above 750
   • Monthly income should be more than 20000 USD`;
   constructor(
-    private employeeService: EmployeeService,
+    private tnmService: TNMServiceService,
     private route: ActivatedRoute,
     private router:Router
   ) {}
 
   ngOnInit(): void {
     this.id = this.route.snapshot.params['id'];
-    this.employeeService.fetchTaskDetails(this.id).subscribe(tasks => {
+    this.tnmService.fetchTaskDetails(this.id).subscribe(tasks => {
       Object.assign(this.task = tasks);
       if(this.task.role == 'Reviewer' && this.task.status!= 'Completed'){
         this.showAcceptButton= true; 
@@ -52,7 +52,8 @@ export class TaskComponent {
   }
   userResponse(status: String): void {
     this.task.status= status;
-    this.employeeService.updateTask(this.task).subscribe(taskId =>this.id);
-    this.router.navigate([`/taskList`]);
+    this.tnmService.updateTask(this.task).subscribe(taskId =>{
+      this.router.navigate([`/taskList`]);
+    });
   }
 }

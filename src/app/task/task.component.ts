@@ -56,4 +56,13 @@ export class TaskComponent {
       this.router.navigate([`/taskList`]);
     });
   }
+  rewrite(): void {
+    this.router.navigate([`/ruleBuilder`], {
+      queryParams: {
+        source:'task',
+        id: this.task.ruleId,
+        taskId:this.task.taskId
+      }
+    });
+  }
 }

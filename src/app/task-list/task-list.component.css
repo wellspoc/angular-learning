@@ -1,24 +1,92 @@
+/* Card container styling */
 .task-list-container {
-    margin: 20px;
-  }
-  
-  table {
-    width: 100%;
-    border-collapse: collapse;
-  }
-  
-  th, td {
-    border: 1px solid #ddd;
-    padding: 8px;
-    text-align: left;
-  }
-  
-  tr:hover {
-    background-color: #f1f1f1;
-    cursor: pointer;
-  }
-  .disabled-row {
-    pointer-events: none;  /* Disables click events */
-    opacity: 0.5;         /* Makes the row look disabled */
-    background-color: #f0f0f0; /* Light grey for better visibility */
-  }
+  padding: 20px;
+  margin: 20px;
+  border-radius: 10px;
+  background: #fff;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  border: 1px solid #ddd;
+}
+
+
+/* Title styling */
+.title {
+  text-align: center;
+  font-weight: bold;
+  margin-bottom: 20px;
+  color: #6c757d;
+  font-size: 22px;
+}
+
+/* Table Styling */
+mat-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+mat-header-cell, mat-cell {
+  border: 1px solid #ddd;
+  padding: 12px 15px;
+  text-align: center;
+  vertical-align: middle;
+  font-size: 14px;
+}
+
+mat-header-cell {
+  background-color: #f5f5f5;
+  font-weight: bold;
+}
+
+tr:hover {
+  background-color: #f1f1f1;
+  cursor: pointer;
+}
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th, td {
+  border: 1px solid #ddd;
+  padding: 12px 15px;
+  text-align: center;
+  vertical-align: middle;
+  font-size: 14px;
+}
+
+th {
+  background-color: #f5f5f5;
+  font-weight: bold;
+}
+
+tr:hover {
+  background-color: #f1f1f1;
+  cursor: pointer;
+}
+
+
+/* Disabled Row Styling */
+.disabled-row {
+  background-color: transparent; /* No background color */
+  pointer-events: none; /* Prevent clicking */
+  opacity: 1; /* Full opacity */
+}
+
+/* Pagination styling */
+mat-paginator {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.mat-paginator-range-actions {
+  display: none;
+}
+
+.mat-paginator-page-size-label {
+  margin-right: 10px;
+}
+
+.mat-paginator-page-size {
+  margin-left: 10px;
+}

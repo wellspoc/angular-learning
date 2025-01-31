@@ -1,7 +1,9 @@
 <div class="container mt-5">
+  <div class="card p-4 shadow-sm">
+    <h2 class="mb-4 text-center">Rule Details</h2>
     <form>
       <!-- Rule Name -->
-      <div class="mt-3">
+      <div class="mb-3">
         <label for="nameText" class="form-label">Rule Name</label>
         <input
           type="text"
@@ -12,7 +14,7 @@
           [ngModelOptions]="{ standalone: true }"
         />
       </div>
-  
+
       <!-- Test Statement -->
       <div class="mb-3">
         <label for="disabledTextArea" class="form-label">Test Statement</label>
@@ -25,8 +27,9 @@
           rows="4"
         ></textarea>
       </div>
+
       <!-- SQL Query -->
-      <div class="mt-3">
+      <div class="mb-3">
         <label for="query" class="form-label">SQL Query</label>
         <input
           type="text"
@@ -37,13 +40,36 @@
           disabled
         />
       </div>
-  
-      <!-- Action Buttons -->
-      <div class="mt-4">
-        <button type="button" class="btn btn-secondary me-2" *ngIf="showAcceptButton" (click)="userResponse('Accept')">Accept</button>
-        <button type="button" class="btn btn-primary me-2"  *ngIf="showRejectButton" (click)="userResponse('Reject')">Reject</button>
-        <button type="button" class="btn btn-success" *ngIf="showRewriteButton" (click)="userResponse('Rewrite')" >Rewrite</button>
+
+      <!-- Button Group Centered -->
+      <div class="d-flex justify-content-center mt-4">
+        <div class="btn-group" role="group" aria-label="Action buttons">
+          <button
+            type="button"
+            class="btn btn-success me-2"
+            *ngIf="showAcceptButton"
+            (click)="userResponse('Accept')"
+          >
+            Accept
+          </button>
+          <button
+            type="button"
+            class="btn btn-danger me-2"
+            *ngIf="showRejectButton"
+            (click)="userResponse('Reject')"
+          >
+            Reject
+          </button>
+          <button
+            type="button"
+            class="btn btn-warning me-2"
+            *ngIf="showRewriteButton"
+            (click)="rewrite()"
+          >
+            Rewrite
+          </button>
+        </div>
       </div>
     </form>
   </div>
-  
+</div>

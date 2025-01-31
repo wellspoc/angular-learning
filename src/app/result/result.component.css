@@ -1,20 +1,42 @@
-.rule-list-container {
-    margin: 20px;
-  }
-  
-  table {
-    width: 100%;
-    border-collapse: collapse;
-  }
-  
-  th, td {
-    border: 1px solid #ddd;
-    padding: 8px;
-    text-align: left;
-  }
-  
-  tr:hover {
-    background-color: #f1f1f1;
-    cursor: pointer;
-  }
-  
+
+  /* For card background color */
+.card {
+  background-color: #f8f9fa;
+  border-radius: 10px;
+}
+
+/* Make the table headers standout */
+/* Table Styling */
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th, td {
+  border: 1px solid #ddd;
+  padding: 12px 15px;
+  text-align: center;
+  vertical-align: middle;
+  font-size: 14px;
+}
+
+th {
+  background-color: #007bff; /* Blue background */
+  color: white; /* White text */
+  font-weight: bold; /* Make text bold */
+}
+
+tr:hover {
+  background-color: #f1f1f1;
+}
+/* Improve the spacing around the table */
+.table-responsive {
+  margin-top: 20px;
+  overflow-x: auto;
+}
+thead {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  background-color: #007bff; /* Blue background for the sticky header */
+}

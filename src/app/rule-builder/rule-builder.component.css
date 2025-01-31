@@ -1,8 +1,7 @@
-.container {
-    font-family: Arial, sans-serif;
-    max-width: 800px;
-  }
-  
+.card {
+  background-color: #f8f9fa;
+  border-radius: 10px;
+}
   textarea {
     width: 100%;
     font-family: monospace;

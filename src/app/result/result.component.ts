@@ -31,12 +31,18 @@ export class ResultComponent implements OnInit {
   dataList!:any;
   ngOnInit(): void {
     this.route.queryParams.subscribe(params => {
-      this.ruleName = params['ruleName'];
-      this.query = params['query'];
       this.id = params['id'];
-      this.header = params['columnName'];
     });
-    this.tnmService.executeQuery(this.query).subscribe(resultset => { this.dataList=resultset
+    this.tnmService.fetchRuleDetails(this.id).subscribe(rule => {
+      this.ruleName =rule.ruleName;
+      this.query = rule.sqlQuery;
+      if(rule.columnName) {
+        this.header = rule.columnName.split(',');
+      }
+      this.tnmService.executeQuery(this.query).subscribe(resultset => { this.dataList=resultset
+      });
     });
+
+    
   }
 }

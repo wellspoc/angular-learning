@@ -4,4 +4,5 @@ export class TaskDetail {
     query!:String;
     role!:String;
     status!:String;
+    ruleId!:number;
 }
